@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thorncut: every death fights beside you</title>
+<meta name="description" content="Thorncut is a hand-pixelled run-and-gun platformer. Fight through 30 chapters while every life you lose comes back to fight beside you. Play free in your browser or download it for Windows and Mac.">
+<meta property="og:title" content="Thorncut">
+<meta property="og:description" content="A hand-pixelled run-and-gun platformer where every death fights beside you.">
+<meta property="og:image" content="https://thorncut.vercel.app/shots/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png">
+<style>
+@font-face{font-family:Thornpixel;src:url(font.woff2) format('woff2');font-display:swap}
+:root{--night:#12102a;--dusk:#1f1b45;--soil:#21140f;--deep:#120b09;--bone:#f4efe0;--ember:#ffd070;--thorn:#ff6a45;--echo:#a8fff0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--deep)}
+body{margin:0;background:linear-gradient(var(--night),var(--dusk) 38%,#2a1b1a 58%,var(--soil) 72%,var(--deep));color:var(--bone);font:400 19px/1.45 Thornpixel,ui-monospace,Menlo,monospace;-webkit-font-smoothing:none;font-synthesis:none}
+a{color:inherit}
+img{display:block;width:100%;height:auto;image-rendering:pixelated}
+h1,h2,h3,p{margin:0;font-weight:400}
+:focus-visible{outline:3px solid var(--echo);outline-offset:3px}
+.hero{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,3.5vw,44px);background:#0c0a18}
+.hero>img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:62% bottom}
+.hero::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent 55%,#120b09),linear-gradient(90deg,rgba(12,10,24,.82),transparent 42%)}
+.hero>div,.hero>nav{position:relative;z-index:1}
+h1{font-size:clamp(68px,12.4vw,172px);line-height:.82;letter-spacing:.01em;color:var(--bone);text-shadow:.04em .04em 0 #14131a}
+h1 span{display:block;color:var(--thorn)}
+.tag{margin-top:16px;color:var(--echo);font-size:clamp(20px,2.5vw,32px);text-shadow:2px 2px 0 #14131a}
+.menu{list-style:none;margin:0;padding:0;font-size:clamp(25px,2.7vw,34px);line-height:1.22}
+.menu a{display:inline-block;padding:2px 0 2px 1.1em;text-decoration:none;text-shadow:2px 2px 0 #0c0a18;position:relative}
+.menu li:first-child a{color:var(--ember)}
+.menu a:hover,.menu a:focus-visible{color:var(--thorn);transform:translateX(5px)}
+.menu a:hover::before,.menu a:focus-visible::before{content:"\25B6";position:absolute;left:0;font-size:.7em;top:.3em}
+section{padding:clamp(72px,10vw,132px) clamp(20px,6vw,88px);max-width:1320px;margin:auto}
+h2{font-size:clamp(38px,5.4vw,72px);line-height:1.02;color:var(--ember);max-width:17ch}
+.echo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,88px);align-items:end}
+.echo p{max-width:48ch}.echo p+p{margin-top:16px}
+.echo .lead{font-size:clamp(23px,2.3vw,28px);line-height:1.3;color:var(--echo)}
+.chapters h2{margin-bottom:clamp(28px,4vw,48px)}
+.shots{display:grid;grid-template-columns:7fr 5fr;gap:10px}
+.shots figure{margin:0;position:relative;overflow:hidden;background:#000}
+.shots img{aspect-ratio:16/9;object-fit:cover}
+.shots figcaption{position:absolute;left:0;bottom:0;padding:3px 10px;background:#14131a;font-size:17px}
+.shots figure:nth-child(n+3){grid-column:auto}
+.shots figure:nth-child(3){order:4}.shots figure:nth-child(4){order:3}
+.route{columns:3;column-gap:32px;margin:clamp(32px,4vw,48px) 0 0;padding:0 0 0 2.4em;font-size:18px;line-height:1.4}
+.route li{break-inside:avoid;padding-left:.3em}
+.route li::marker{color:var(--thorn)}
+.play{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px) clamp(24px,4vw,48px);margin-top:clamp(32px,4vw,48px)}
+.play h3{font-size:24px;color:var(--bone);margin-bottom:5px}
+.play p{font-size:18px;color:#d8d2c0;max-width:34ch}
+.keys{margin-top:clamp(36px,5vw,56px);color:var(--ember)}
+kbd{font:inherit;border:2px solid currentColor;padding:0 6px}
+.get>*{max-width:820px}
+.get>p{margin-top:12px;max-width:52ch}
+.btn{display:inline-block;margin:clamp(22px,3vw,32px) 0 clamp(30px,4vw,44px);padding:10px 22px 12px;background:var(--thorn);color:#14131a;font-size:25px;text-decoration:none;box-shadow:5px 5px 0 #000}
+.btn:hover{background:var(--ember)}.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #000}
+.files{list-style:none;margin:0;padding:0;border-top:2px solid #6a4a34}
+.files a{display:flex;justify-content:space-between;gap:16px;padding:13px 4px;border-bottom:2px solid #6a4a34;text-decoration:none;font-size:22px}
+.files a:hover{background:#3a261c;color:var(--ember)}
+.files small{font-size:18px;color:#c9b8a0;white-space:nowrap}
+details{margin-top:14px;font-size:18px;max-width:64ch}
+details+details{margin-top:6px}
+summary{cursor:pointer;color:var(--ember)}
+details p{margin:8px 0 10px}
+code{font:inherit;color:var(--echo);overflow-wrap:anywhere}
+footer{padding:28px clamp(20px,6vw,88px) 34px;max-width:1320px;margin:auto;color:#a89884;font-size:17px}
+@media (max-width:820px){
+ .menu a{background:rgba(12,10,24,.68);padding-right:.35em}
+ .hero>img{object-position:58% bottom}
+ .echo,.shots,.play{grid-template-columns:1fr}.route{columns:2}
+ .shots figure:nth-child(3),.shots figure:nth-child(4){order:0}
+}
+@media (max-width:460px){.route{columns:1}.files a{flex-direction:column;gap:0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.menu a:hover,.menu a:focus-visible{transform:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <img src="shots/hero.webp" alt="A pixel-art village at night, with a gunslinger standing beside a campfire under giant trees" width="1278" height="720">
+  <div>
+    <h1>THORN<span>CUT</span></h1>
+    <p class="tag">Every death fights beside you</p>
+  </div>
+  <nav aria-label="Main">
+    <ul class="menu">
+      <li><a href="play.html">Play in browser</a></li>
+      <li><a href="#download">Download</a></li>
+      <li><a href="#echoes">Echoes</a></li>
+      <li><a href="#chapters">Chapters</a></li>
+      <li><a href="#how">How it plays</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+<section class="echo" id="echoes">
+  <h2>Your last life is your best backup</h2>
+  <div>
+    <p class="lead">When you die in Thorncut, that life comes back as an Echo.</p>
+    <p>It reruns your attempt beside you, shoots whatever is near and explodes where you fell.</p>
+    <p>A retry keeps the same map, so your Echoes know the way. Die in the right place and your past lives clear the road for the next one.</p>
+  </div>
+</section>
+<section class="chapters" id="chapters">
+  <h2>Thirty chapters, from Mistwood to the Red Moon</h2>
+  <div class="shots">
+    <figure><img src="shots/caldera.webp" alt="The player firing beside a burning ember floor and a thorn wall" width="1278" height="720" loading="lazy"><figcaption>The Ember Caldera</figcaption></figure>
+    <figure><img src="shots/snow.webp" alt="A moonlit blue forest with a boat sign beside the river" width="1278" height="720" loading="lazy"><figcaption>Snowpine Ridge</figcaption></figure>
+    <figure><img src="shots/canopy.webp" alt="Timber houses and a tower joined by a thorn wall" width="1278" height="720" loading="lazy"><figcaption>The Elder Canopy</figcaption></figure>
+    <figure><img src="shots/glow.webp" alt="A dark glowing forest with a house and enemies on stone ledges" width="1278" height="720" loading="lazy"><figcaption>The Glowcap Deep</figcaption></figure>
+  </div>
+  <ol class="route">
+    <li>Mistwood Crossing</li><li>The Lantern Glade</li><li>The Penitent Bamboo</li><li>Silverleaf Hollow</li><li>Deeproot Hollow</li><li>The Mossbound Temple</li><li>The Rootwater Mangrove</li><li>The Burning Wood</li><li>Stormwood</li><li>The Drowned Fen</li><li>The Drowned Light</li><li>The Amber Thicket</li><li>The Reed Sea</li><li>Whispering Pines</li><li>Snowpine Ridge</li><li>Glass Lake</li><li>The Glowcap Deep</li><li>The Moonlit Barrows</li><li>Thunder Falls</li><li>The Paper Birches</li><li>The Wild Orchard</li><li>Ironbark Forge</li><li>The Ember Caldera</li><li>The Sinking Bog</li><li>The Thornwall</li><li>The Bell Road</li><li>The Elder Canopy</li><li>The Crown of Oaks</li><li>The Last Clearing</li><li>The Red Moon Wood</li>
+  </ol>
+</section>
+<section id="how">
+  <h2>Run, dash and shoot your way through</h2>
+  <div class="play">
+    <div><h3>Dash through enemies</h3><p>Cut straight through an enemy and your dash comes back at once. Landing on heads refills it too.</p></div>
+    <div><h3>Break the thorn walls</h3><p>Red thorns block the way until you clear enough of the enemies in that stretch.</p></div>
+    <div><h3>Ride what you find</h3><p>Boats, gliders, zip lines and rail cars carry you over toxic rivers and through tunnels.</p></div>
+    <div><h3>Pick from 10 characters</h3><p>Start with six and unlock the rest by defeating enemies.</p></div>
+    <div><h3>Choose your difficulty</h3><p>Six levels run from First Timer to Max, each with its own save.</p></div>
+    <div><h3>Keep playing</h3><p>Try the Daily Challenge or see how far you get in Endless mode.</p></div>
+  </div>
+  <p class="keys"><kbd>A</kbd> <kbd>D</kbd> run, <kbd>Space</kbd> jump, click to fire, <kbd>E</kbd> talk, <kbd>F</kbd> board a ride</p>
+</section>
+<section class="get" id="download">
+  <h2>Start playing</h2>
+  <p>Play in your browser with nothing to install, or download the desktop version. Browser and desktop saves are separate.</p>
+  <a class="btn" href="play.html">Play in browser</a>
+  <ul class="files">
+    <li><a href="https://github.com/MathExist/Thorncut/releases/latest/download/Thornshot-Windows.exe" download>Windows <small>.exe, 76 MB</small></a></li>
+    <li><a href="https://github.com/MathExist/Thorncut/releases/latest/download/Thornshot-Mac-AppleSilicon.dmg" download>Mac with Apple chip (M1 or later) <small>.dmg, 99 MB</small></a></li>
+    <li><a href="https://github.com/MathExist/Thorncut/releases/latest/download/Thornshot-Mac-Intel.dmg" download>Mac with Intel chip <small>.dmg, 104 MB</small></a></li>
+  </ul>
+  <details><summary>Windows says the app isn't recognized</summary><p>The app isn't code-signed yet. If SmartScreen appears, click More info, then Run anyway.</p></details>
+  <details><summary>Mac won't open the app</summary><p>Drag Thornshot into Applications and try opening it once. Then go to System Settings &gt; Privacy &amp; Security and choose Open Anyway.</p><p>If macOS says the app is damaged, run this in Terminal: <code>xattr -cr /Applications/Thornshot.app</code></p></details>
+</section>
+</main>
+<footer>Thorncut. Made by MathExist.</footer>
+</body>
+</html>
