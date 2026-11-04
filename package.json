@@ -1,0 +1,14 @@
+{
+  "name": "thorncut",
+  "version": "1.0.0",
+  "description": "A hand-pixelled run-and-gun platformer where every death fights beside you",
+  "scripts": {
+    "build": "echo 'No build step required for static site'"
+  },
+  "keywords": ["game", "platformer"],
+  "author": "MathExist",
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
